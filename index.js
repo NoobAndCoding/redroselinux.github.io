@@ -1,6 +1,6 @@
 const el = document.getElementById("typewriter");
 
-const list = [
+const words = [
   "FOSS only",
   "Reproducible",
   "Rolling and stable",
@@ -10,26 +10,25 @@ const list = [
 ];
 
 const speed = 90;
-const delay = 1000;
+const pause = 900;
 
-async function type(txt) {
-  for (let i = 0; i < txt.length; i++) {
-    el.innerHTML = txt.slice(0, i + 1) + '<span class="cursor"></span>';
+async function type(text) {
+  for (let i = 0; i < text.length; i++) {
+    el.innerHTML = text.slice(0, i + 1) + '<span class="cursor"></span>';
     await new Promise(r => setTimeout(r, speed));
   }
-  await new Promise(r => setTimeout(r, delay));
-  for (let i = txt.length; i >= 0; i--) {
-    el.innerHTML = txt.slice(0, i) + '<span class="cursor"></span>';
-    await new Promise(r => setTimeout(r, speed / 1.6));
+  await new Promise(r => setTimeout(r, pause));
+  for (let i = text.length; i > 0; i--) {
+    el.innerHTML = text.slice(0, i - 1) + '<span class="cursor"></span>';
+    await new Promise(r => setTimeout(r, speed / 1.5));
   }
 }
 
 async function loop() {
   let i = 0;
   while (true) {
-    await type(list[i]);
-    i++;
-    if (i >= list.length) i = 0;
+    await type(words[i]);
+    i = (i + 1) % words.length;
   }
 }
 
