@@ -1,6 +1,6 @@
-const tw = document.getElementById("typewriter");
+const el = document.getElementById("typewriter");
 
-const words = [
+const list = [
   "FOSS only",
   "Reproducible",
   "Rolling and stable",
@@ -9,34 +9,28 @@ const words = [
   "Dev-friendly"
 ];
 
-const speed = 95; // (ms)
-const pause = 1200; // time available to read
+const speed = 90;
+const delay = 1000;
 
-async function typeIt(txt) {
-  for (let i = 0; i <= txt.length; i++) {
-    tw.innerHTML = txt.slice(0, i) + '<span class="cursor"></span>';
+async function type(txt) {
+  for (let i = 0; i < txt.length; i++) {
+    el.innerHTML = txt.slice(0, i + 1) + '<span class="cursor"></span>';
     await new Promise(r => setTimeout(r, speed));
   }
-}
-
-async function backspace() {
-  let t = tw.textContent;
-  while (t.length) {
-    t = t.substring(0, t.length - 1);
-    tw.innerHTML = t + '<span class="cursor"></span>';
-    await new Promise(r => setTimeout(r, speed / 1.8));
+  await new Promise(r => setTimeout(r, delay));
+  for (let i = txt.length; i >= 0; i--) {
+    el.innerHTML = txt.slice(0, i) + '<span class="cursor"></span>';
+    await new Promise(r => setTimeout(r, speed / 1.6));
   }
 }
 
-async function run() {
-  for (;;) {
-    for (let i = 0; i < words.length; i++) {
-      const w = words[i];
-      await typeIt(w);
-      await new Promise(r => setTimeout(r, pause));
-      await backspace();
-    }
+async function loop() {
+  let i = 0;
+  while (true) {
+    await type(list[i]);
+    i++;
+    if (i >= list.length) i = 0;
   }
 }
 
-run();
+loop();
