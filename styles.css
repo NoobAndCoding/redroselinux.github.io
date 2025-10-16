@@ -170,3 +170,13 @@ iframe {
 .waitlist button:hover {
   background-color: rgb(200, 40, 40);
 }
+
+.cursor {
+  border-left: 2px solid #fff;
+  animation: blink 0.7s infinite;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  50.01%, 100% { opacity: 0; }
+}
