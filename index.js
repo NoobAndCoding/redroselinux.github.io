@@ -9,10 +9,10 @@ const words = [
   "Dev-friendly"
 ];
 
-const speed = 95; // (ms)
-const pause = 1200; // time available to read
+const speed = 95;
+const pause = 1200;
 
-async function type(txt) {
+async function typeIt(txt) {
   for (let i = 0; i <= txt.length; i++) {
     tw.innerHTML = txt.slice(0, i) + '<span class="cursor"></span>';
     await new Promise(r => setTimeout(r, speed));
@@ -20,7 +20,8 @@ async function type(txt) {
 }
 
 async function backspace() {
-  let t = tw.textContent;
+  // use only the visible text (ignore the cursor)
+  let t = tw.textContent.replace("|", "").trim();
   while (t.length) {
     t = t.substring(0, t.length - 1);
     tw.innerHTML = t + '<span class="cursor"></span>';
@@ -32,7 +33,7 @@ async function run() {
   for (;;) {
     for (let i = 0; i < words.length; i++) {
       const w = words[i];
-      await type(w);
+      await typeIt(w);
       await new Promise(r => setTimeout(r, pause));
       await backspace();
     }
