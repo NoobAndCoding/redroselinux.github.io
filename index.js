@@ -20,7 +20,6 @@ async function typeIt(txt) {
 }
 
 async function backspace() {
-  // use only the visible text (ignore the cursor)
   let t = tw.textContent.replace("|", "").trim();
   while (t.length) {
     t = t.substring(0, t.length - 1);
