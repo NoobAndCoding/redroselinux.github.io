@@ -12,7 +12,7 @@ const words = [
 const speed = 95; // (ms)
 const pause = 1200; // time available to read
 
-async function typeIt(txt) {
+async function type(txt) {
   for (let i = 0; i <= txt.length; i++) {
     tw.innerHTML = txt.slice(0, i) + '<span class="cursor"></span>';
     await new Promise(r => setTimeout(r, speed));
@@ -32,7 +32,7 @@ async function run() {
   for (;;) {
     for (let i = 0; i < words.length; i++) {
       const w = words[i];
-      await typeIt(w);
+      await type(w);
       await new Promise(r => setTimeout(r, pause));
       await backspace();
     }
